@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div{
+            width:13%;
+        }
+    </style>
+</head>
+<body>
+    <h1>Add Products</h1>
+    <div>
+        <input type="number" id='id'placeholder='ID'>
+        <input type="text" id='name' placeholder='name'>
+        <input type="number" id='price' placeholder='price'>
+        <button onclick='addProduct()'>Add Products</button>
+    </div>
+    <h1>Delete Product</h1>
+    <input type="number" id="product_id" placeholder="product_id" />
+    <button onclick='deleteProduct()'>Delete Product</button>
+
+    <script>
+        // async function show(){
+        //     let res = await fetch('http://localhost:5000/api/product');
+        //     let data = await res.json();
+        //     console.log(data);
+        //     return
+        // }
+        // show();
+
+        async function addProduct(){
+            let data={
+                id: document.getElementById('id').value,
+                name: document.getElementById('name').value,
+                price: document.getElementById('price').value
+            };
+            try{
+                let response = await fetch('http://localhost:5000/api/product',{
+                method:"POST",
+                body: JSON.stringify(data),
+                headers:{
+                    "Content-Type": "application/json"
+                },
+            })
+            let d = await response.json();
+            console.log(d)
+            }
+            catch(e){
+                console.log(e)
+            }
+           
+        }
+        async function deleteProduct(){
+            var id = document.getElementById("product_id").value;
+            let response = await fetch(`http://localhost:5000/api/product/${id}`,{
+                method: "DELETE",
+                headers:{
+                    "Content-Type": "application/json"
+                }
+            })
+
+        }
+
+    </script>
+</body>
+</html>
